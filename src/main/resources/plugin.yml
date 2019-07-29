@@ -1,0 +1,4 @@
+name: "PlayerData"
+main: me.jts3304.playerdata.PlayerDataManager
+version: ${project.version}
+api-version: "1.13"
