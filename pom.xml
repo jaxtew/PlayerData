@@ -6,7 +6,7 @@
 
     <groupId>me.jts3304</groupId>
     <artifactId>playerdata</artifactId>
-    <version>1</version>
+    <version>1.1.1</version>
 
     <repositories>
         <repository>
