@@ -6,7 +6,7 @@
 
     <groupId>me.jts3304</groupId>
     <artifactId>playerdata</artifactId>
-    <version>1.1.1</version>
+    <version>1.2.1</version>
 
     <repositories>
         <repository>
@@ -27,9 +27,8 @@
     <build>
         <resources>
             <resource>
-                <directory>src/main/resources</directory> <!-- (your resources folder location) -->
-                <filtering>true
-                </filtering> <!-- this is the important part, it's what replaces, filters, all placeholders in the resources folder (such as ${project.version} in plugin.yml) -->
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
             </resource>
         </resources>
         <plugins>
@@ -37,8 +36,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>11</source>
-                    <target>11</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
         </plugins>
