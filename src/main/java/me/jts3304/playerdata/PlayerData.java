@@ -235,7 +235,9 @@ public class PlayerData implements Closeable
      */
     public List<String> getPermissions()
     {
-        return new Gson().fromJson(data.get("permissions"), new TypeToken<List<String>>(){}.getType());
+        return new Gson().fromJson(data.get("permissions"), new TypeToken<List<String>>()
+        {
+        }.getType());
     }
 
     /**

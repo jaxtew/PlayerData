@@ -1,7 +1,5 @@
 package me.jts3304.playerdata;
 
-import java.lang.reflect.Type;
-
 /**
  * Represents a data field utilized by {@link PlayerData}
  */
@@ -31,7 +29,7 @@ public class PlayerDataField<T> {
     /**
      * @return the type of the value of the field
      */
-    public Type getType(){
+    public Class getType(){
         return defaultValue.getClass();
     }
 }

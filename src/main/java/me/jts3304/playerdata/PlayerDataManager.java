@@ -11,7 +11,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -89,8 +88,8 @@ public class PlayerDataManager extends JavaPlugin implements Listener {
 
         // LOAD TASKS
         loadTasks.add((player, playerData) -> {
-            if(playerData.getMutableData().get("uuid") == null) playerData.setUniqueId(player.getUniqueId());
-            if(playerData.getMutableData().get("username") == null) playerData.setName(player.getName());
+            if(playerData.getCustomType("uuid", UUID.class) == null) playerData.setUniqueId(player.getUniqueId());
+            if(playerData.getCustomType("username", String.class) == null) playerData.setName(player.getName());
         });
 
         // JOIN TASKS
@@ -158,7 +157,7 @@ public class PlayerDataManager extends JavaPlugin implements Listener {
         }else{
             try(BufferedReader reader = Files.newBufferedReader(dataPath)){
                 data = new PlayerData(new HashMap<>(new Gson()
-                        .fromJson(reader, new TypeToken<Map<String, Object>>(){}.getType())));
+                        .fromJson(reader, new TypeToken<Map<String, String>>(){}.getType())));
             } catch (IOException e) {
                 getLogger().severe("Failed to load data of " + offlinePlayer.getName());
                 if(debug) e.printStackTrace();
@@ -168,7 +167,7 @@ public class PlayerDataManager extends JavaPlugin implements Listener {
 
         // ENSURE FIELDS HAVE NO HOLES
         fields.forEach(field -> {
-            if(!data.getMutableData().containsKey(field.getName()) || data.getMutableData().get(field.getName()) == null){
+            if(!data.getMutableData().containsKey(field.getName()) || data.getCustomType(field.getName(), field.getType()) == null){
                 data.getMutableData().put(field.getName(),
                         new GsonBuilder().setPrettyPrinting().create().toJson(field.getDefaultValue()));
             }
