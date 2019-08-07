@@ -94,12 +94,8 @@ public class PlayerDataManager extends JavaPlugin implements Listener {
         });
 
         // JOIN TASKS
-        joinTasks.add(((player, playerData) -> playerData.addBukkitTask(new BukkitRunnable(){
-            @Override
-            public void run() {
-                playerData.setPlayingTime(playerData.getPlayingTime() + 1L);
-            }
-        }.runTaskTimer(this, 20L, 20L))));
+        joinTasks.add(((player, playerData) -> playerData.addBukkitTask(Bukkit.getScheduler().runTaskTimer(this,
+                () -> playerData.setPlayingTime(playerData.getPlayingTime() + 1L) ,20L, 20L))));
 
         // QUIT TASKS
         quitTasks.add(((player, playerData) -> playerData.getTaskIds().forEach(taskId -> Bukkit.getScheduler().cancelTask(taskId))));
@@ -173,7 +169,8 @@ public class PlayerDataManager extends JavaPlugin implements Listener {
         // ENSURE FIELDS HAVE NO HOLES
         fields.forEach(field -> {
             if(!data.getMutableData().containsKey(field.getName()) || data.getMutableData().get(field.getName()) == null){
-                data.getMutableData().put(field.getName(), field.getDefaultValue());
+                data.getMutableData().put(field.getName(),
+                        new GsonBuilder().setPrettyPrinting().create().toJson(field.getDefaultValue()));
             }
         });
         // CLEAN UNUSED FIELDS
