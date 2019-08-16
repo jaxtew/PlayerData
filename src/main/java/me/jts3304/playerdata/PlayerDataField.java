@@ -3,11 +3,13 @@ package me.jts3304.playerdata;
 /**
  * Represents a data field utilized by {@link PlayerData}
  */
-public class PlayerDataField<T> {
+public class PlayerDataField
+{
     private final String name;
-    private final T defaultValue;
+    private final Object defaultValue;
 
-    public PlayerDataField(String name, T defaultValue){
+    public PlayerDataField(String name, Object defaultValue)
+    {
         this.name = name;
         this.defaultValue = defaultValue;
     }
@@ -15,21 +17,16 @@ public class PlayerDataField<T> {
     /**
      * @return the name of the field
      */
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
     /**
      * @return the default value of the field
      */
-    public Object getDefaultValue() {
+    public Object getDefaultValue()
+    {
         return defaultValue;
-    }
-
-    /**
-     * @return the type of the value of the field
-     */
-    public Class getType(){
-        return defaultValue.getClass();
     }
 }

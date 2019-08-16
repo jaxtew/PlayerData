@@ -71,10 +71,10 @@ public class PlayerDataManager extends JavaPlugin implements Listener {
         // load, ensure base values, save to file
         try(BufferedReader reader = Files.newBufferedReader(fieldsPath)){
             fields = new Gson().fromJson(reader, new TypeToken<List<PlayerDataField>>(){}.getType());
-            PlayerDataField<UUID> uuidField = new PlayerDataField<>("uuid", null);
-            PlayerDataField<String> usernameField = new PlayerDataField<>("username", null);
-            PlayerDataField<Long> playingTimeField = new PlayerDataField<>("playing_time", 0L);
-            PlayerDataField<List<String>> permissionsField = new PlayerDataField<>("permissions", new ArrayList<>());
+            PlayerDataField uuidField = new PlayerDataField("uuid", null);
+            PlayerDataField usernameField = new PlayerDataField("username", null);
+            PlayerDataField playingTimeField = new PlayerDataField("playing_time", 0L);
+            PlayerDataField permissionsField = new PlayerDataField("permissions", new ArrayList<>());
             List<String> fieldNames = fields.stream().map(PlayerDataField::getName).collect(Collectors.toList());
             if(!fieldNames.contains(uuidField.getName())) fields.add(uuidField);
             if(!fieldNames.contains(usernameField.getName())) fields.add(usernameField);
@@ -167,7 +167,7 @@ public class PlayerDataManager extends JavaPlugin implements Listener {
 
         // ENSURE FIELDS HAVE NO HOLES
         fields.forEach(field -> {
-            if(!data.getMutableData().containsKey(field.getName()) || data.getCustomType(field.getName(), field.getType()) == null){
+            if(!data.getMutableData().containsKey(field.getName()) || data.getCustomType(field.getName(), Object.class) == null){
                 data.getMutableData().put(field.getName(),
                         new GsonBuilder().setPrettyPrinting().create().toJson(field.getDefaultValue()));
             }
